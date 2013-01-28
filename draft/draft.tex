@@ -1,0 +1,49 @@
+\documentclass[10pt, conference, compsocconf]{IEEEtran}
+\usepackage[dvips]{graphicx}
+\usepackage[tight,footnotesize]{subfigure}
+\usepackage{url}
+\usepackage{cite}
+
+\newcommand{\hd}{\emph{H+D}}
+\newcommand{\hp}{\emph{Hpin}}
+\newcommand{\dm}{\emph{Dmap}}
+\newcommand{\dmh}{\emph{DmapH}}
+
+
+%-----------------------------------------
+% need for camera-ready
+%\pagestyle{empty}
+%----------------------------------------
+
+\begin{document}
+
+\title{Data Transfer Matters in Low-Latency GPU Computing}
+
+\author{\IEEEauthorblockN{Yusuke Fujii,  Takuya Azumi, and Nobuhiko Nishio}
+\IEEEauthorblockA{College of Information Science and Engineering\\
+Ritsumeikan University}
+\and
+\IEEEauthorblockN{Shinpei Kato and Masato Edahiro}
+\IEEEauthorblockA{Department of Information Science\\
+Nagoya University}
+}
+
+\maketitle
+
+%-----------------------------------------
+% need for camera-ready
+%\thispagestyle{empty}
+
+\input{abstract.tex}
+
+\input{empirical_comparison.tex}
+
+\bibliographystyle{plain}
+{\footnotesize
+\bibliography{references}
+}
+
+\end{document}
+
+
+
