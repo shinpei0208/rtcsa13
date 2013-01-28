@@ -1,0 +1,133 @@
+\section{Empirical Comparison}
+\label{sec:empirical_comparison}
+
+\begin{figure}[!t]
+ \centering
+ \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_normal_HtoD.pdf}}\\
+ \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_normal_DtoH.pdf}}
+ \caption{Average data transfer times of single streams.}
+ \label{fig:average_data_transfer}
+\end{figure}
+
+\begin{figure}[!t]
+ \centering
+ \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_normal_HtoD_worst.pdf}}\\
+ \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_normal_DtoH_worst.pdf}}
+ \caption{Worst-case data transfer times of single streams.}
+ \label{fig:worst_case_data_transfer}
+\end{figure}
+
+\begin{figure}[!t]
+ \centering
+ \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_HtoD.pdf}}\\
+ \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_DtoH.pdf}}
+ \caption{Average data transfer times of single streams under high CPU load.}
+ \label{fig:average_data_transfer_cpuload}
+\end{figure}
+
+\begin{figure}[!t]
+ \centering
+ \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_HtoD_worst.pdf}}\\
+ \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_DtoH_worst.pdf}}
+ \caption{Worst-case data transfer times of single streams under high
+ CPU load.}
+ \label{fig:worst_case_data_transfer_cpuload}
+\end{figure}
+
+\begin{figure}[!t]
+ \centering
+ \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_memswap_HtoD.pdf}}\\
+ \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_memswap_DtoH.pdf}}
+ \caption{Average data transfer times of single streams under high
+ memory access load.} 
+ \label{fig:average_data_transfer_memswap}
+\end{figure}
+
+\begin{figure}[!t]
+ \centering
+ \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_memswap_HtoD_worst.pdf}}\\
+ \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_memswap_DtoH_worst.pdf}}
+ \caption{Worst-case data transfer times of single streams under high
+ memory access load.}
+ \label{fig:worst_case_data_transfer_memswap}
+\end{figure}
+
+\begin{figure}[!t]
+ \centering
+ \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_hackbench_HtoD.pdf}}\\
+ \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_hackbench_DtoH.pdf}}
+ \caption{Average data transfer times of single streams in the presence
+ of \textsf{hackbench}.}
+ \label{fig:average_data_transfer_hackbench}
+\end{figure}
+
+\begin{figure}[!t]
+ \centering
+ \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_hackbench_HtoD_worst.pdf}}\\
+ \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_hackbench_DtoH_worst.pdf}}
+ \caption{Worst-case data transfer times of single streams in the
+ presence of \textsf{hackbench}.}
+ \label{fig:worst_case_data_transfer_hackbench}
+\end{figure}
+
+\begin{figure}[!t]
+ \centering
+ \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_HtoD.pdf}}\\
+ \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_DtoH.pdf}}
+ \caption{Average data transfer times of real-time single streams
+ under high CPU load.}
+ \label{fig:average_transfer_cpuload_real-time}
+\end{figure}
+
+\begin{figure}[!t]
+ \centering
+ \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_HtoD_worst.pdf}}\\
+ \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_DtoH_worst.pdf}}
+ \caption{Worst-case data transfer times of real-time single streams
+ under high CPU load.}
+ \label{fig:worst_case_data_transfer_cpuload_real-time}
+\end{figure}
+
+\begin{figure}[!t]
+ \centering
+ \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_HtoD.pdf}}\\
+ \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_DtoH.pdf}}
+ \caption{Average data transfer times of real-time single streams
+ under high memory access load.}
+ \label{fig:average_data_transfer_memswap_real-time}
+\end{figure}
+
+\begin{figure}[!t]
+ \centering
+ \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_HtoD_worst.pdf}}\\
+ \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_DtoH_worst.pdf}}
+ \caption{Worst-case data transfer times of real-time single streams
+ under high memory access load.}
+ \label{fig:worst_case_data_transfer_memswap_real-time}
+\end{figure}
+
+\begin{figure}[!t]
+ \centering
+ \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_hackbench_HtoD.pdf}}\\
+ \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_hackbench_DtoH.pdf}}
+ \caption{Average data transfer times of real-time single streams in the
+ presence of \textsf{hackbench}.}
+ \label{fig:average_data_transfer_hackbench_real-time}
+\end{figure}
+
+\begin{figure}[!t]
+ \centering
+ \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_hackbench_HtoD_worst.pdf}}\\
+ \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_hackbench_DtoH_worst.pdf}}
+ \caption{Worst-case data transfer times of real-time single streams in
+ the presence of \textsf{hackbench}.}
+ \label{fig:worst_case_data_transfer_hackbench_real-time}
+\end{figure}
+
+\begin{figure}[!t]
+ \centering
+ \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_HtoD.pdf}}\\
+ \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_DtoH.pdf}}\\
+ \caption{Average data transfer times of concurrent two streams.}
+ \label{fig:average_data_transfer_concurrent}
+\end{figure}
