@@ -61,11 +61,19 @@ transfer methods respectively:
 \subsection{Basic Performance}
 
 \begin{figure}[!t]
- \centering
- \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_HtoD.pdf}}\\
- \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_DtoH.pdf}}
- \caption{Average data transfer times of real-time single streams.}
- \label{fig:average_transfer_real-time}
+ \begin{center}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_HtoD.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_DtoH.pdf}}
+  \caption{Average data transfer times of real-time single streams.}
+  \label{fig:average_transfer_real-time}
+ \end{center}
+ \vspace{0.5em}
+ \begin{center}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_HtoD_worst.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_DtoH_worst.pdf}}
+  \caption{Worst-case data transfer times of real-time single streams.}
+  \label{fig:worst_case_transfer_real-time}
+ \end{center}
 \end{figure}
 
 Figure~\ref{fig:average_transfer_real-time} shows the average
@@ -73,19 +81,33 @@ performance of each data transfer method when a single data stream
 performs alone.
 Even with this most straightforward setup, there are several interesting
 observations.
-The performance characterizations of the host-to-device and the
-device-to-host communications are not identical at all.
+Performance characteristics of the host-to-device and the device-to-host
+communications are not identical at all.
+In particular, the performance of standard DMA exhibits a 10x difference
+between the two directions of communications.
+This is attributed to hardware capabilities that are not well documented
+to the public.
+We also find that performances of the methods are diverse but a
+combination of \textsf{DMA} and \textsf{IORW} can derive the best
+performance in this setup.
+The other methods are almost always inferior to either of \textsf{DMA}
+or \textsf{IORW}.
+Another interesting observation is that using multiple GPC
+microcontrollers to parallelize the data trasfer is less effective than
+a single GPC or HUB controller when the data size is small.
+
+Figure~\ref{fig:worst_case_transfer_real-time} shows the worst-case
+performance in the same setup as the above experiment.
+It is important to note that we acquire almost the same results as those
+shown in Figure~\ref{fig:average_transfer_real-time}, though there is
+some degradation in the performance of \textsf{DMA} for the
+host-to-device direction.
+These comparisons lead to some conclusion that we may optimize the data
+transfer performance by switching between \textsf{DMA} and \textsf{IORW}
+at an appropriate boundary.
 
 \begin{figure}[!t]
- \centering
- \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_HtoD_worst.pdf}}\\
- \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_DtoH_worst.pdf}}
- \caption{Worst-case data transfer times of real-time single streams.}
- \label{fig:worst_case_transfer_real-time}
-\end{figure}
-
-\begin{figure}[!t]
- \centering
+ \begin{center}
  \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_HtoD.pdf}}\\
  \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_DtoH.pdf}}
  \caption{Average data transfer times of real-time single streams

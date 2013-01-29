@@ -153,7 +153,7 @@ To set the memory window, we obtain the leading physical address of the
 corresponding memory object and set it to a specific control register.
 By doing so, a limited range of the memory object becomes visible to the
 CPU through a specific BAR0 region.
-In case of NVIDIA GPUs, the size of this range is $1$MB and the specific
+In case of NVIDIA GPUs, the size of this range is $4$MB and the specific
 BAR0 region begins at 0x70000000 in the MMIO address.
 Once the window is set, we can read and write this BAR0 region to access
 data on the device memory.
