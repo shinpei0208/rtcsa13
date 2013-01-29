@@ -16,6 +16,7 @@ the concepts of data transfer methods introduced in this paper are
 mostly applicable to PCIe-connected compute devices.
 
 \subsection{Standard DMA}
+\label{sec:dma}
 
 \begin{figure}[!t]
  \centering
@@ -43,6 +44,7 @@ Details of the GPU DMA mechanism can be found in previous
 work~\cite{Kato_ATC11, Kato_ATC12}.
 
 \subsection{Microcontroller-based Data Transfer}
+\label{sec:micro}
 
 \begin{figure}[!t]
  \centering
@@ -71,7 +73,8 @@ device memory and a microcontroller.
 This is non-trivial overhead but the handling of this DMA is very
 light-weight as compared to the standard DMA method.
 
-\subsection{Memory-mapped read and write}
+\subsection{Memory-mapped Read and Write}
+\label{sec:iorw}
 
 \begin{figure}[!t]
  \centering
@@ -98,8 +101,8 @@ write method.
 NVIDIA GPUs as well as most other PCIe devices expose base address
 registers (BARs) to the system, through which the CPU can access
 specific areas of the device memory.
-There are several BARs depending on the device.
-NVIDIA GPUs typically provide six BARs:
+There are several BARs depending on the target device.
+NVIDIA GPUs typically provide the following BARs:
 \begin{description}
  \item[BAR0] Memory-mapped I/O (MMIO) registers.
  \item[BAR1] Device memory aperture (windows).
@@ -108,12 +111,22 @@ NVIDIA GPUs typically provide six BARs:
  \item[BAR5] I/O port.
  \item[BAR6] PCI ROM.
 \end{description}
-Often the BAR0 is used to access registers of the GPU while the BAR1
-makes the device memory visible to the CPU.
-This direct read and write method is pretty simple in that all we have
-to do is to configure the page table of the GPU.
+Often the BAR0 is used to access the control registers of the GPU while
+the BAR1 makes the device memory visible to the CPU.
+This direct read and write method is pretty simple.
+We create virtual address space for the BAR1 region and set its leading
+address to a specific control register.
+Thus the BAR1 region can be directly accessed by the GPU using the
+unified memory addressing (UMA) mode, where all memory objects allocated
+to the host and the device memory can be referenced by the same address
+space.
+Once the BAR1 region is mapped, all we have to do is to manage the page
+table of the GPU to allocate memory objects from this BAR1 region and
+call the I/O remapping function supported by the OS kernel to remap the
+corresponding BAR1 region to the user-space buffer.
 
-\subsection{Memory-window read and write}
+\subsection{Memory-window Read and Write}
+\label{sec:memwnd}
 
 \begin{figure}[!t]
  \centering
@@ -121,3 +134,39 @@ to do is to configure the page table of the GPU.
  \caption{Memory-window read and write.}
  \label{fig:memwnd}
 \end{figure}
+
+The BAR0 region is often called memory-mapped I/O (MMIO) space.
+This is the main control space of the GPU, through which all hardware
+engines are controlled.
+Its space is sparsely populated with areas representing individual
+hardware engines, which in turn are sparsely populated with control
+registers.
+The list of hardware engines is architecture-dependent.
+The MMIO space contains a special subarea for indirect device and host
+memory accesses, seperated from the control registers.
+This plays a role of windows that make the device memory visible to the
+CPU in a different way than the BAR1 region.
+
+Figure~\ref{fig:memwnd} shows a concept of this memory-window read and
+write method.
+To set the memory window, we obtain the leading physical address of the
+corresponding memory object and set it to a specific control register.
+By doing so, a limited range of the memory object becomes visible to the
+CPU through a specific BAR0 region.
+In case of NVIDIA GPUs, the size of this range is $1$MB and the specific
+BAR0 region begins at 0x70000000 in the MMIO address.
+Once the window is set, we can read and write this BAR0 region to access
+data on the device memory.
+
+\subsection{Pinned Host Memory}
+
+Yet another approach to GPU data transfers is to use the pinned host
+memory.
+As aforementioned, NVIDIA GPUs support UMA.
+This is due to the graphics address remapping table (GART) employed by
+the GPU, allowing the system to specify physical host memory addresses
+directly in the GPU page table as far as they are associated with pinned
+PCI-mapped pages.
+Although this approach is also effective to an extent for low-latency
+GPU computing~\cite{Kato_ICCPS13}, it is not within the scope of this
+paper and we focus on how to access the device memory in this paper.
