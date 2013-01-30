@@ -64,14 +64,14 @@ transfer methods respectively:
  \begin{center}
   \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_HtoD.pdf}}\\
   \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_DtoH.pdf}}
-  \caption{Average data transfer times of real-time single streams.}
+  \caption{Average performance of single streams.}
   \label{fig:average_transfer_real-time}
  \end{center}
  \vspace{0.5em}
  \begin{center}
   \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_HtoD_worst.pdf}}\\
   \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_DtoH_worst.pdf}}
-  \caption{Worst-case data transfer times of real-time single streams.}
+  \caption{Worst-case performance of single streams.}
   \label{fig:worst_case_transfer_real-time}
  \end{center}
 \end{figure}
@@ -92,6 +92,11 @@ combination of \textsf{DMA} and \textsf{IORW} can derive the best
 performance in this setup.
 The other methods are almost always inferior to either of \textsf{DMA}
 or \textsf{IORW}.
+The most signficant finding is that \textsf{IORW} becomes very slow for
+the device-to-host direction.
+We consider that this is due to a design specification of the GPU.
+It is designed so that the GPU can read data fast from the host computer
+but conpromise write access performance.
 Another interesting observation is that using multiple GPC
 microcontrollers to parallelize the data trasfer is less effective than
 a single GPC or HUB controller when the data size is small.
@@ -106,23 +111,27 @@ These comparisons lead to some conclusion that we may optimize the data
 transfer performance by switching between \textsf{DMA} and \textsf{IORW}
 at an appropriate boundary.
 
-\begin{figure}[!t]
- \begin{center}
- \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_HtoD.pdf}}\\
- \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_DtoH.pdf}}
- \caption{Average data transfer times of real-time single streams
- under high CPU load.}
- \label{fig:average_transfer_cpuload_real-time}
-\end{figure}
+\subsection{Interferred Performance}
 
 \begin{figure}[!t]
- \centering
- \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_HtoD_worst.pdf}}\\
- \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_DtoH_worst.pdf}}
- \caption{Worst-case data transfer times of real-time single streams
- under high CPU load.}
- \label{fig:worst_case_data_transfer_cpuload_real-time}
+ \begin{center}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_HtoD.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_DtoH.pdf}}
+  \caption{Average performance of single streams under high CPU load.}
+  \label{fig:average_transfer_cpuload_real-time}
+ \end{center}
+ \vspace{0.5em}
+ \begin{center}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_HtoD_worst.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_DtoH_worst.pdf}}
+  \caption{Worst-case performance of single streams under high CPU load.}
+  \label{fig:worst_case_data_transfer_cpuload_real-time}
+  \end{center}
 \end{figure}
+
+Figure~\ref{fig:average_transfer_cpuload_real-time} shows the average
+performance of each data transfer method when the CPU encounters
+extremely high workload.
 
 \begin{figure}[!t]
  \centering
@@ -167,10 +176,6 @@ at an appropriate boundary.
  \caption{Average data transfer times of concurrent two streams.}
  \label{fig:average_data_transfer_concurrent}
 \end{figure}
-
-
-
-
 
 \begin{figure}[!t]
  \centering

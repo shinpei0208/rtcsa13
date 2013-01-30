@@ -73,6 +73,16 @@ device memory and a microcontroller.
 This is non-trivial overhead but the handling of this DMA is very
 light-weight as compared to the standard DMA method.
 
+The microcontroller is executing firmware loaded by the device driver.
+We modify this firmware code to employ an interface for the data
+communications.
+The firmware adopts an event-driven design: it invokes only when the
+device driver sends some command from the CPU.
+The user program hence first needs to communicate with the device driver
+to issue such a command.
+Our implementation uses \texttt{ioctl} system calls to achieve this user
+and device driver communication.
+
 \subsection{Memory-mapped Read and Write}
 \label{sec:iorw}
 
@@ -111,6 +121,7 @@ NVIDIA GPUs typically provide the following BARs:
  \item[BAR5] I/O port.
  \item[BAR6] PCI ROM.
 \end{description}
+
 Often the BAR0 is used to access the control registers of the GPU while
 the BAR1 makes the device memory visible to the CPU.
 This direct read and write method is pretty simple.
