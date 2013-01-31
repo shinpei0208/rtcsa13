@@ -1,0 +1,40 @@
+\section{Assumption and Terminology}
+\label{sec:assumption}
+
+We assume the Compute Unified Device Architecture (CUDA) for GPU
+programming~\cite{NVIDIA_CUDA}.
+A unit of code that is individually launched on the GPU is called
+a \textit{kernel}.
+The kernel is composed of multiple \textit{threads} that execute the
+code in parallel.
+A unit of threads that are co-scheduled by hardware is called a
+\textit{block}, while a collection of blocks for the corresponding
+kernel is called a \textit{grid}.  
+The maximum number of threads that can be contained by an individual
+block is defined by the GPU architecture.
+
+CUDA uses a set of an application programming interface (API) functions
+to control the GPU.
+A CUDA program often follows (i) allocate space
+to the device memory, (ii) copy input data to the allocated device memory
+space, (iii) launch the program on the GPU, (iv) copy output data back
+to the host memory, and (v) free the allocated device memory space. 
+The scope of this paper is related to (ii) and (iv).
+In particular, we focus on the \texttt{cuMemCopyHtoD()} and the
+\texttt{cuMemCopyDtoH()} functions of the CUDA Driver API, which
+correspond to (ii) and (iv) respectively.
+Since an open-source implementation of these functions is available with
+Gdev~\cite{Kato_ATC12}, we modify them to accomodate the data transfer
+methods investigated in this paper.
+
+Our computing platform contains a single set of the CPU and the GPU.
+Although we restrict our attention to CUDA and the GPU, the notion of
+the investigated data transfer methods is well applicable to other
+heterogeneous compute devices.
+GPUs are currently well-recognized forms of the heterogeneous compute
+devices, but emerging alternatives include the Intel Many Integrated
+Core (MIC) and the AMD Fusion technology.
+The programming models of these different platforms are almost identical
+in that the CPU controls the compute devices.
+Our future work includes an integrated investigation of these different
+platforms.
