@@ -27,52 +27,45 @@ compute-intensive applications.
  \centering
  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/forIntro_HtoD.pdf}}\\
  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/forIntro_DtoH.pdf}}
- \caption{Performance of DMA and I/O read/write for the GPU.}
+ \caption{Performance of DMA and I/O read/write for the NVIDIA GPU.}
  \label{fig:intro_data_transfer}
 \end{figure}
 
 One of the greatest challenges of GPU computing is the integration of
-predictable real-time systems.
+real-time systems.
 So far the real-time systems community has addressed resource management
 issues of GPUs~\cite{Basaran_ECRTS12, Elliott_RTS12, Elliott_ECRTS12,
 Kato_ATC11, Kato_RTAS11, Kato_RTSS11}.
 The main contribution of these work is the scheduling of compute
 kernels and data transfers associated with the GPU.
-On the other hand, the basic performance and latency issues of these
-operations are not explored in the real-time systems literature.
+On the other hand, the basic performance and latency issues of GPUs are
+not well explored in the real-time systems literature.
 Given that compute kernels are offloaded to the GPU, their performance
 and latency are more dominated by compiler and hardware technology.
-However, optimization of data transfers must be complemented by system
+However, an optimization of data transfers must be complemented by system
 software due to constrants of PCIe devices~\cite{Kato_ATC12}.
+Data transfers are also interefered by compelling workload on the CPU,
+while compute kernels are protected within the GPU.
+These data transfer issues must be well understood and addressed in
+order to build predictable soft real-time, if not hard real-time,
+systems augmented with GPUs.
 
-performance of compute kernels is not a scope of resource management
-issues, but that of data transfers is managable~\cite{Kato_ATC12}.
-
-GPU computing in the current state of the art involves many black-box
-pieces.
-Open-source projects have revealed key mechanisms of GPU
-resource management~\cite{Kato_ATC11, Kato_ATC12}, but the hardware
+Figure~\ref{fig:intro_data_transfer} illustrates the average data
+transfer times of hardware-based direct memory access (DMA) and
+memory-mapped I/O read and write access performed on an NVIDIA GeForce
+GTX~480 graphics card using an open-source Linux
+driver~\cite{Kato_ATC12}.
+Apparently the performance characteristics are not identical between the
+host-to-device and the device-to-host directions.
+A very elementary issue of this performance difference has been
+discussed~\cite{Kato_ATC12}, but there is no clear conclusion on what
+methods can optimize the data transfer performance, what different
+methods are available, and what is their implication for real-time
+systems.
+Currently we pray that the black-box data transfer methods provided by
+vendors' proprietary software are well optimized, because the hardware
 details of GPUs are not disclosed to the public.
-Current systems hence rely on a high-level programming framework and
-limited information of proprietary sofware provided by the GPU
-vendors.
-This black box constraint may be acceptable for throughput-oriented
-high-performane computing but 
-One of the mysteries of GPU computing due to this black box constraint
-is \textit{how to transfer data between the host and the device memory}.
-In typical GPU-accelerated systems, the CPU executes a master flow of
-the program using the host memory while the GPU executes a compute
-kernel using the device memory.
-This heterogeneity of GPU computing requires the program to exchange
-data between the host and the device memory.
-A programming framework often provides a set of data transfer methods as
-part of an application programming interface (API), but their mechanisms
-are encapsulated in the proprietary software implementation.
-
-We must pray that these data transfer methods are already optimized by
-the vendors.
-
-One of the greatest challenges of GPU computing is the management of
-latency issues.
-
-nobody knows
+However, real-time systems must build on predictable disciplines.
+A better understanding of the data transfer performance for the GPU is
+an essetial piece of work to facilitate research on GPU-accelerated
+heterogeneous real-time systems.
