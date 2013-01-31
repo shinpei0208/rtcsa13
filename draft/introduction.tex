@@ -38,7 +38,13 @@ issues of GPUs~\cite{Basaran_ECRTS12, Elliott_RTS12, Elliott_ECRTS12,
 Kato_ATC11, Kato_RTAS11, Kato_RTSS11}.
 The main contribution of these work is the scheduling of compute
 kernels and data transfers associated with the GPU.
-Given a concept of the GPU as a hardware accelerator, the basic
+On the other hand, the basic performance and latency issues of these
+operations are not explored in the real-time systems literature.
+Given that compute kernels are offloaded to the GPU, their performance
+and latency are more dominated by compiler and hardware technology.
+However, optimization of data transfers must be complemented by system
+software due to constrants of PCIe devices~\cite{Kato_ATC12}.
+
 performance of compute kernels is not a scope of resource management
 issues, but that of data transfers is managable~\cite{Kato_ATC12}.
 
