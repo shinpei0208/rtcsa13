@@ -1,2 +1,16 @@
 \section{Conclusion}
 \label{sec:conclusion}
+
+In this paper, we have presented an investigation and empirical
+comparison of the data transfer methods for GPU computing.
+We found that the hardware-based DMA and the I/O read and write methods
+are the most effective to maximize the data transfer performance for a
+single stream even in the presence of competing CPU workload.
+On the other hand, the microcontroller-based method is useful to overlap
+the data transfer with the DMA or the IO read and write methods,
+reducing the total makespan of multiple data streams.
+We also demonstrated that the traditional real-time CPU scheduler can
+shield the data transfer of a real-time task from performance
+interference.
+We believe that all these findings are useful contributions to develop
+an integration of real-time systems and GPU computing.
