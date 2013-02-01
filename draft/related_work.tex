@@ -1,0 +1,42 @@
+\section{Related Work}
+\label{sec:related_work}
+
+The zero-copy data transfer methods for low-latency GPU computing were
+developed for plasma control systems~\cite{Kato_ICCPS13}.
+The authors argued that the hardware-based DMA transfer method does not
+meet the latency requirement of plasma control systems.
+They presented several zero-copy data transfer methods, some of which is
+similar to the memory-mapped I/O read and write method investigated in
+this paper.
+However, this previous work considered only a small size of data.
+This specific assumption allowed the I/O read and write method to
+perform always better than the hardware-based DMA method.
+We demonstrated that these two methods outperform each other depending
+on the target data size.
+In this regard, we provided more general observations of data transfer
+methods for GPU computing.
+
+The performance boundary of the hardware-based DMA and the I/O read and
+write methods was briefly discussed in the Gdev
+project~\cite{Kato_ATC12}. 
+They showed that the hardware-based DMA method should be used only for
+large data.
+We provided the same claim in this paper.
+However, we dig into the causal relation of these two methods more in
+depth and also expanded our attention to the microcontroller-based
+method.
+Our findings complement the results of the Gdev project.
+
+The scheduling of GPU data transfers was presented to improve the
+responsiveness of GPU computing~\cite{Basaran_ECRTS12, Kato_RTSS11}.
+These work focused on making preemption points for burst non-preemptive
+DMA transfers with the GPU, but the underlying system relied on the
+proprietary closed-source software.
+On the other hand, we provided open-source implementations to disclose
+the fundamental of GPU data transfer methods.
+We found that the hardware-based DMA transfer method is not necessarily
+the best choice depending on the data size and workload.
+Since the I/O read and write method is fully preemptive and the
+microcontroller-based method is partly preemptive, the contribution of
+this paper provides a new insight to these preemptive data transfer
+approaches.
