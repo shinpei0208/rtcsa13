@@ -10,7 +10,7 @@ magnitude as traditional multicore CPUs~\cite{NVIDIA_Kepler}.
 This rapid growth of GPUs is due to recent advances in the
 programming model, often referred to as general-purpose computing on
 GPUs (GPGPU).
-Data-parallel and compute-intensive applications receive signficant
+Data-parallel and compute-intensive applications receive significant
 performance benefits using GPGPU.
 Currently a main application of GPGPU is supercomputing~\cite{TOP500}
 but there are more and more emerging applications in different fields.
@@ -20,7 +20,7 @@ encrypted networking~\cite{Jang_NSDI11}, and storage
 management~\cite{Bhatotia_FAST12, Gharaibeh_HPDC10, Kato_ATC12,
 Sun_SYSTOR12}.
 This broad range of applications raises the need of further developing
-GPU technology to support scalablability of emerging data-parallel and
+GPU technology to support scalability of emerging data-parallel and
 compute-intensive applications.
 
 \begin{figure}[!t]
@@ -43,8 +43,8 @@ not well explored in the literature.
 Given that compute kernels are offloaded to the GPU, their performance
 and latency are more dominated by compiler and hardware technology.
 However, an optimization of data transfers must be complemented by system
-software due to constrants of PCIe devices~\cite{Kato_ATC12}.
-Data transfers are also interefered by compelling workload on the CPU,
+software due to constraints of PCIe devices~\cite{Kato_ATC12}.
+Data transfers are also interfered by compelling workload on the CPU,
 while compute kernels are protected within the GPU.
 These data transfer issues must be well understood and addressed in
 order to build predictable soft real-time, if not hard real-time,
@@ -54,7 +54,7 @@ Data transfer issues are particularly important for low-latency GPU
 computing.
 Kato~\textit{et. al.} demonstrated that the data transfer is a dominant
 property for GPU-accelerated plasma control systems~\cite{Kato_ICCPS13}.
-This is a specific application where data must be trasferred between the
+This is a specific application where data must be transferred between the
 sensor/actuator devices and the GPU at a high-rate but is a good example
 presenting the impact of data transfers in GPU computing.
 Since emerging applications augmented with GPUs may demand a similar
@@ -74,11 +74,11 @@ methods can optimize the data transfer performance, what different
 methods are available, and what is their implication for real-time
 systems.
 Currently we pray that the black-box data transfer methods provided by
-vendors' proprietary software are well optimized, because the hardware
+vendors proprietary software are well optimized, because the hardware
 details of GPUs are not disclosed to the public.
 However, real-time systems must build on predictable disciplines.
 A better understanding of the data transfer performance for the GPU is
-an essetial piece of work to facilitate research on GPU-accelerated
+an essential piece of work to facilitate research on GPU-accelerated
 heterogeneous real-time systems.
 
 \textbf{Contribution:}
@@ -91,7 +91,7 @@ The contribution of this paper clarifies how to design and implement
 optimized data transfer methods especially in the context of real-time
 constraints.
 We believe that this is a useful contribution to advance real-time
-technology with GPUs and emerging heterogenous compute devices.
+technology with GPUs and emerging heterogeneous compute devices.
 
 \textbf{Organization:}
 The rest of this paper is organized as follows.

@@ -92,19 +92,21 @@ Even with this most straightforward setup, there are several interesting
 observations.
 Performance characteristics of the host-to-device and the device-to-host
 communications are not identical at all.
-In particular, the performance of standard DMA exhibits a 10x difference
+In particular the performance of standard DMA exhibits a 10x difference
 between the two directions of communications.
-We believe that this is attributed to hardware capabilities that are not
-well documented to the public.
-We also find that the performances of different methods are quite
-diverse but a combination of \textsf{DMA} and \textsf{IORW} can derive
-the best performance.
-For small data, \textsf{IORW} is preferred while \textsf{DMA} is the
-best performer for large data.
+We believe that this is due to hardware capabilities that are not
+documented to the public.
+We also find that the performances of different methods are diverse but
+either \textsf{DMA} or \textsf{IORW} can derive the best performance for
+any data size.
+In case of the host-to-device direction, for small data from $16$B to
+$8$MB, \textsf{IORW} is preferred, while \textsf{DMA} outperforms
+\textsf{IORW} larger data than $8$MB.
 The other methods are almost always inferior to either of \textsf{DMA}
 or \textsf{IORW}.
 The most significant finding is that \textsf{IORW} becomes very slow for
 the device-to-host direction.
+It is faster than \textsf{DMA} only until $512$B.
 This is due to a design specification of the GPU.
 It is designed so that the GPU can read data fast from the host computer
 but compromise write access performance.
@@ -258,7 +260,7 @@ It is worth conducting this experiment.
 As demonstrated in
 Figure~\ref{fig:average_realtime_memswap}~and~\ref{fig:worst_realtime_memswap},
 the impact of memory pressure on the data transfer performance is
-neligible.
+negligible.
 This means that all the data transfer methods investigated in this paper
 require not much paged host memory space.
 Otherwise they must be interfered by memory workload.
@@ -346,7 +348,7 @@ does not really matter to the performance.
 However, from $16$KB to $2$MB the performance is improved by using four
 microcontrollers in parallel (\textit{i.e.}, \textsf{GPC4}), since
 \textsf{DMA} is faster than the microcontroller and
-thereby the performance is alighed with the microcontroller curve.
+thereby the performance is aligned with the microcontroller curve.
 We learn from this experiment that the microcontroller is useful to
 overlap concurrent data streams with \textsf{DMA} or \textsf{IORW}, and
 using multiple microcontrollers in parallel can further improve the
