@@ -38,10 +38,12 @@ engine.
 Upon a request of GPU commands, the DMA engine transfers a specified
 data set between the host and the device memory.
 Once a DMA transfer starts, it is non-preemptive.
+To wait for the completion of DMA, the system can either poll a specific
+GPU register or generate a GPU interrupt.
 This method is often the most effective to transfer a large size of
 data.
-Details of the GPU DMA mechanism can be found in previous
-work~\cite{Kato_ATC11, Kato_ATC12}.
+The details of this hardware-based DMA mechanism can be found in
+previous work~\cite{Kato_ATC11, Kato_ATC12}.
 
 \subsection{Microcontroller-based Data Transfer}
 \label{sec:micro}
@@ -73,20 +75,30 @@ device memory and microcontroller.
 This is non-trivial overhead but the handling of this DMA is very
 light-weight as compared to the standard DMA method.
 
-The microcontroller is executing firmware loaded by the device driver.
+The microcontroller executes firmware loaded by the device driver.
 We modify this firmware code to employ an interface for the data
 communications.
-The firmware adopts an event-driven design: it invokes only when the
-device driver sends some command from the CPU.
-The user program hence first needs to communicate with the device driver
-to issue such a command.
+This firmware adopts an event-driven design.
+The firmware task invokes only when the device driver sends a
+corresponding command from the CPU through the PCIe bus.
+The user program first needs to communicate with the device driver
+to issue this command to the microcontroller.
 Our implementation uses \texttt{ioctl} system calls to achieve this user
 and device driver communication.
+The firmware command can be issued by poking a specific MMIO register.
+We have also developed an open-source C compiler for this GPU
+microcontroller.
+It may be downloaded from \url{http://github.com/cs005/guc}.
 
 A constraint of this microcontroller approach is that the size of each
 data transfer is limited by $256$ bytes.
 If the data transfer size exceeds $256$ bytes, we have to split a
 transaction into multiple chunks.
+Although this could be additional overhead to the data transfer time, we
+can also use multiple microcontrollers to send these separate chunks in
+parallel.
+This parallel transaction can improve the makespan of the total data
+transfer time.
 
 \subsection{Memory-mapped Read and Write}
 \label{sec:iorw}
@@ -105,8 +117,8 @@ A small size of data transfers may encounter severe latency problems due
 to this overhead.
 One of good examples can be found in the plasma control
 system~\cite{Kato_ICCPS13}.
-If low-latency is required, direct read and write accesses are more
-appropriate than hardware-based DMA.
+If low-latency is required, this direct I/O read and write method is
+more appropriate than the hardware-based DMA method.
 Since the GPU as a PCIe-connected device provides memory-mapped regions
 upon the PCI address space, the CPU can directly access the device
 memory without using bounce buffers on the host memory.
