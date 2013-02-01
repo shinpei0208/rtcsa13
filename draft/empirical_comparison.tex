@@ -66,6 +66,7 @@ transfer methods respectively:
 \end{itemize}
 
 \subsection{Basic Performance}
+\label{sec:basic_performance}
 
 \begin{figure}[!t]
  \begin{center}
@@ -152,6 +153,7 @@ the above experiments.
 \end{comment}
 
 \subsection{Interfered Performance}
+\label{sec:interfered_performance}
 
 \begin{figure}[!t]
  \begin{center}
@@ -281,7 +283,7 @@ Otherwise they must be interfered by memory workload.
 
 Figure~\ref{fig:average_realtime_hackbench}~and~\ref{fig:worst_realtime_hackbench}
 show the average and the worst-case performance of each data transfer
-method respectively, when a misbehaving \textsf{hackbench} process is running.
+method respectively, when a misbehaving \textsf{hackbench} process coexists.
 \textsf{hackbench} is a tool that generates many processes executing I/O
 system calls with pipes.
 The results are all similar to the previous ones.
@@ -309,9 +311,46 @@ systems and GPU computing.
   \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_DtoH_worst.pdf}}\\
   \caption{Worst-case performance of combinations of the data transfer
   methods for concurrent real-time tasks.}
-  \label{fig:worst_real-time_concurrent}
+  \label{fig:worst_realtime_concurrent}
  \end{center}
 \end{figure}
+
+So far we have studied the capabilities of the investigated data
+transfer methods and their causal relation to a real-time task.
+We now evaluate the performance of concurrent \textit{two} data streams
+using different combinations of the data transfer methods as shown in
+Figure~\ref{fig:average_realtime_concurrent}~and~\ref{fig:worst_realtime_concurrent}.
+This is a very interesting result.
+For the host-to-device direction, the best performance is obtained when
+both the two tasks use \textsf{IORW}.
+In this case, the two data streams are not overlapped but are processed
+in sequential due to the use of the same \textsf{IORW} path.
+Nonetheless it outperforms the other combinations because the
+performance of \textsf{IORW} is way higher than the other methods as we
+have observed in a series of the previous experiments.
+However, the device-to-host direction shows a different performance.
+Since \textsf{IORW} becomes slow when the CPU reads the device memory as
+mentioned in Section~\ref{sec:basic_performance},
+\textsf{IORW}/\textsf{IORW} is not the best performer any longer.
+Instead using the microcontroller(s) provides the best performance until
+$2$MB.
+This is attributed to the fact that the microcontroller-based data
+transfer method can be overlapped with any other data transfer methods.
+From $16$B to $16$KB, a combination of the microcontroller and
+\textsf{IORW} is the fastest, while that of the microcontroller and
+\textsf{DMA} is the fastest from $16$KB to $2$MB.
+Note that from $16$B to $16$KB the performance is aligned with the slow
+\textsf{IORW} curve.
+Therefore the choice of \textsf{HUB}, \textsf{GPC}, and \textsf{GPC4}
+does not really matter to the performance.
+However, from $16$KB to $2$MB the performance is improved by using four
+microcontrollers in parallel (\textit{i.e.}, \textsf{GPC4}), since
+\textsf{DMA} is faster than the microcontroller and
+thereby the performance is alighed with the microcontroller curve.
+We learn from this experiment that the microcontroller is useful to
+overlap concurrent data streams with \textsf{DMA} or \textsf{IORW}, and
+using multiple microcontrollers in parallel can further improve the
+performance of concurrent data transfers.
 
 \begin{comment}
 \begin{figure}[!t]
