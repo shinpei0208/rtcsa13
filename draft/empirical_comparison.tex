@@ -284,13 +284,33 @@ show the average and the worst-case performance of each data transfer
 method respectively, when a misbehaving \textsf{hackbench} process is running.
 \textsf{hackbench} is a tool that generates many processes executing I/O
 system calls with pipes.
+The results are all similar to the previous ones.
+Since the Linux real-time scheduler is now well enhanced to protect a
+real-time task from such misbehaving workload, these results are obvious
+and trivial in some sense, but we can lead to a conclusion from a series
+of the above experiments that \textit{the data transfer methods for the
+GPU can be protected by the traditional real-time scheduler capability}.
+This is a useful finding to facilitate an integration of real-time
+systems and GPU computing.
+
+\subsection{Concurrent Performance}
 
 \begin{figure}[!t]
- \centering
- \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_HtoD.pdf}}\\
- \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_DtoH.pdf}}\\
- \caption{Average performance of of concurrent two streams.}
- \label{fig:average_data_transfer_concurrent}
+ \begin{center}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_HtoD.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_DtoH.pdf}}\\
+  \caption{Average performance of combinations of the data transfer
+  methods for concurrent real-time tasks.}
+  \label{fig:average_realtime_concurrent}
+ \end{center}
+ \vspace{0.5em}
+ \begin{center}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_HtoD_worst.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_DtoH_worst.pdf}}\\
+  \caption{Worst-case performance of combinations of the data transfer
+  methods for concurrent real-time tasks.}
+  \label{fig:worst_real-time_concurrent}
+ \end{center}
 \end{figure}
 
 \begin{comment}
