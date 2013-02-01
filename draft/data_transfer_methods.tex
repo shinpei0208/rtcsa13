@@ -68,8 +68,8 @@ Figure~\ref{fig:micro} shows a concept of this microcontroller-based
 data transfer method.
 Since there is no data path to directly copy data between the host and
 the device memory using a microcontroller, each data transfer needs
-to take two hops: (i) the host memory and a microcontroller and (ii) the
-device memory and a microcontroller.
+to take two hops: (i) the host memory and microcontroller and (ii) the
+device memory and microcontroller.
 This is non-trivial overhead but the handling of this DMA is very
 light-weight as compared to the standard DMA method.
 
@@ -82,6 +82,11 @@ The user program hence first needs to communicate with the device driver
 to issue such a command.
 Our implementation uses \texttt{ioctl} system calls to achieve this user
 and device driver communication.
+
+A constraint of this microcontroller approach is that the size of each
+data transfer is limited by $256$ bytes.
+If the data transfer size exceeds $256$ bytes, we have to split a
+transaction into multiple chunks.
 
 \subsection{Memory-mapped Read and Write}
 \label{sec:iorw}
@@ -179,5 +184,8 @@ the GPU, allowing the system to specify physical host memory addresses
 directly in the GPU page table as far as they are associated with pinned
 PCI-mapped pages.
 Although this approach is also effective to an extent for low-latency
-GPU computing~\cite{Kato_ICCPS13}, it is not within the scope of this
+GPU computing~\cite{Kato_ICCPS13}, it is outside of the scope of this
 paper and we focus on how to access the device memory in this paper.
+Note that we still use the host memory as buffer space; we do not
+consider a method that makes the GPU read from and write to this host
+memory directly through UMA.

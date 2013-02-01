@@ -50,6 +50,17 @@ These data transfer issues must be well understood and addressed in
 order to build predictable soft real-time, if not hard real-time,
 systems augmented with GPUs.
 
+Data transfer issues are particularly important for low-latency GPU
+computing.
+Kato~\textit{et. al.} demonstrated that the data transfer is a dominant
+property for GPU-accelerated plasma control systems~\cite{Kato_ICCPS13}.
+This is a specific application where data must be trasferred between the
+sensor/actuator devices and the GPU at a high-rate but is a good example
+presenting the impact of data transfers in GPU computing.
+Since emerging applications augmented with GPUs may demand a similar
+performance requirement, a more general study on the GPU data transfer
+is desired.
+
 Figure~\ref{fig:intro_data_transfer} illustrates the average data
 transfer times of hardware-based direct memory access (DMA) and
 memory-mapped I/O read and write access performed on an NVIDIA GeForce

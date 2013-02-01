@@ -20,18 +20,25 @@ While the test programs uniformly use the same CUDA API functions, we
 provide different internal implementations according to the target data
 transfer methods.
 
-Data streams between the host and the device memory are provided by
-real-time tasks in Linux.
-These real-time tasks are prioritized over other background tasks
-running in Linux.
+Data streams between the host and the device memory are provided by a
+single GPU context.
+Performance interference among multiple GPU contexts is outside of the
+scope of this paper.
+We evaluate the data transfer performances of both real-time and normal
+tasks.
+For the scheduling policies of the Linux kernel, we use
+\texttt{SCHED\_FIFO} for real-time tasks while \texttt{SCHED\_OTHER} for
+normal tasks, where the real-time tasks are always prioritized over the
+normal tasks.
 The real-time capability relies on the default performance of the
 real-time scheduling class supported by the Linux kernel.
 We believe that this setup is sufficient for our experiments given that
 we execute at most one real-time task in the system while multiple data
 streams may be produced by this task.
-Scheduling performance issues are not within the scope of this paper.
+Overall the scheduling performance issues are outside of the scope of
+this paper.
 
-Henchforth we use the following labels to denote the investigated data
+Henceforth we use the following labels to denote the investigated data
 transfer methods respectively:
 \begin{itemize}
  \item \textbf{DMA} denotes the standard DMA method presented in
@@ -53,7 +60,7 @@ transfer methods respectively:
        four different GPC microcontrollers in parallel.
        Note that the NVIDIA Fermi architecture~\cite{NVIDIA_Fermi}
        provides four GPCs and their microcontrollers can perform
-       invididually.
+       individually.
        Therefore we can split the data transfer into four pieces and
        make the four microcontrollers work in parallel.
 \end{itemize}
@@ -64,111 +71,182 @@ transfer methods respectively:
  \begin{center}
   \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_HtoD.pdf}}\\
   \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_DtoH.pdf}}
-  \caption{Average performance of single streams.}
-  \label{fig:average_transfer_real-time}
+  \caption{Average performance of each data transfer method with a
+  real-time task.}
+  \label{fig:average_realtime}
  \end{center}
  \vspace{0.5em}
  \begin{center}
   \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_HtoD_worst.pdf}}\\
   \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_DtoH_worst.pdf}}
-  \caption{Worst-case performance of single streams.}
-  \label{fig:worst_case_transfer_real-time}
+  \caption{Worst-case performance of each data transfer method with a
+  real-time task.}
+  \label{fig:worst_realtime}
  \end{center}
 \end{figure}
 
-Figure~\ref{fig:average_transfer_real-time} shows the average
-performance of each data transfer method when a single data stream
-performs alone.
+Figure~\ref{fig:average_realtime} shows the average performance of each
+data transfer method when a real-time task runs alone.
 Even with this most straightforward setup, there are several interesting
 observations.
 Performance characteristics of the host-to-device and the device-to-host
 communications are not identical at all.
 In particular, the performance of standard DMA exhibits a 10x difference
 between the two directions of communications.
-This is attributed to hardware capabilities that are not well documented
-to the public.
-We also find that performances of the methods are diverse but a
-combination of \textsf{DMA} and \textsf{IORW} can derive the best
-performance in this setup.
+We believe that this is attributed to hardware capabilities that are not
+well documented to the public.
+We also find that the performances of different methods are quite
+diverse but a combination of \textsf{DMA} and \textsf{IORW} can derive
+the best performance.
+For small data, \textsf{IORW} is preferred while \textsf{DMA} is the
+best performer for large data.
 The other methods are almost always inferior to either of \textsf{DMA}
 or \textsf{IORW}.
-The most signficant finding is that \textsf{IORW} becomes very slow for
+The most significant finding is that \textsf{IORW} becomes very slow for
 the device-to-host direction.
-We consider that this is due to a design specification of the GPU.
+This is due to a design specification of the GPU.
 It is designed so that the GPU can read data fast from the host computer
-but conpromise write access performance.
+but compromise write access performance.
 Another interesting observation is that using multiple GPC
-microcontrollers to parallelize the data trasfer is less effective than
+microcontrollers to parallelize the data transfer is less effective than
 a single GPC or HUB controller when the data size is small.
 
-Figure~\ref{fig:worst_case_transfer_real-time} shows the worst-case
-performance in the same setup as the above experiment.
+Figure~\ref{fig:worst_realtime} shows the worst-case performance in
+the same setup as the above experiment.
 It is important to note that we acquire almost the same results as those
-shown in Figure~\ref{fig:average_transfer_real-time}, though there is
+shown in Figure~\ref{fig:average_realtime}, though there is
 some degradation in the performance of \textsf{DMA} for the
 host-to-device direction.
 These comparisons lead to some conclusion that we may optimize the data
 transfer performance by switching between \textsf{DMA} and \textsf{IORW}
 at an appropriate boundary.
 
-\subsection{Interferred Performance}
+We omit the results of normal tasks in this setup, because they are
+almost equal to those of real-time tasks shown above.
+However, real-time and normal tasks behave in a very different manner in
+the presence of competing workload.
+This will be discussed in the next subsection.
+
+\begin{comment}
+\begin{figure}[!t]
+ \begin{center}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_normal_HtoD.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_normal_DtoH.pdf}}
+  \caption{Average performance of each data transfer method with a
+  normal task.}
+  \label{fig:average_normal}
+ \end{center}
+ \vspace{0.5em}
+ \begin{center}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_normal_HtoD_worst.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_normal_DtoH_worst.pdf}}
+  \caption{Worst-case performance of each data transfer methods with a
+  normal task.}
+  \label{fig:worst_normal}
+ \end{center}
+\end{figure}
+
+Figure~\ref{fig:average_normal}~and~\ref{fig:worst_normal} show the
+average and the worst-case performance of a normal in the same setup as
+the above experiments.
+\end{comment}
+
+\subsection{Interfered Performance}
 
 \begin{figure}[!t]
  \begin{center}
   \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_HtoD.pdf}}\\
   \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_DtoH.pdf}}
-  \caption{Average performance of single streams under high CPU load.}
-  \label{fig:average_transfer_cpuload_real-time}
+  \caption{Average performance of each data transfer method with a
+  real-time task under high CPU load.}
+  \label{fig:average_realtime_cpuload}
  \end{center}
  \vspace{0.5em}
  \begin{center}
   \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_HtoD_worst.pdf}}\\
   \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_DtoH_worst.pdf}}
-  \caption{Worst-case performance of single streams under high CPU load.}
-  \label{fig:worst_case_data_transfer_cpuload_real-time}
+  \caption{Worst-case performance of each data transfer methods with a
+  real-time task under high CPU load.}
+  \label{fig:worst_realtime_cpuload}
   \end{center}
 \end{figure}
+
+Figure~\ref{fig:average_realtime_cpuload} shows the average performance
+of each data transfer method when a real-time task encounters extremely
+high workload on the CPU.
+All the methods are successfully protected from performance interference
+due to the real-time scheduler.
+Note that \textsf{DMA} shows a better performance than the previous
+experiments despite the presence of competing workload.
+This is due to the Linux real-time scheduler feature.
+\textsf{DMA} is performed by GPU commands, which may impose a
+suspension on the caller task.
+In the Linux kernel, a real-time task is awakened in a more responsive
+manner when switched from a normal task than from an idle task.
+Therefore when the CPU is fully loaded by normal tasks, a real-time task
+is more responsive.
+The same is true for the worst-case performance as shown in
+Figure~\ref{fig:worst_realtime_cpuload}.
+We learn from these experiments that CPU priorities can protect the
+performance of data transfer for the GPU.
+Note that Gdev uses a polling approach to wait for completions of data
+transfers.
+An interrupt approach is also worth being investigated.
 
 \begin{figure}[!t]
  \begin{center}
   \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_HtoD.pdf}}\\
   \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_DtoH.pdf}}
-  \caption{Average performance of \textsf{NRT} single streams under high
-  CPU load.}
-  \label{fig:average_data_transfer_cpuload}
+  \caption{Average performance of each data transfer method with a
+  normal data stream under high CPU load.}
+  \label{fig:average_normal_cpuload}
  \end{center}
  \vspace{0.5em}
  \begin{center}
   \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_HtoD_worst.pdf}}\\
   \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_DtoH_worst.pdf}}
-  \caption{Worst-case performance of \textsf{NRT} single streams under
-  high CPU load.}
-  \label{fig:worst_case_data_transfer_cpuload}
+  \caption{Worst-case performance of each data transfer method with a
+  normal data stream under high CPU load.}
+  \label{fig:worst_normal_cpuload}
  \end{center}
 \end{figure}
 
-Figure~\ref{fig:average_transfer_cpuload_real-time} shows the average
-performance of each data transfer method when the CPU encounters
-extremely high workload.
-
+For reference,
+Figure~\ref{fig:average_normal_cpuload}~and~\ref{fig:worst_normal_cpuload}
+show the average and the worst-case performance achieved by a normal
+task when the CPU encounters extremely high workload same as the
+preceding experiments.
+Apparently the data transfer times increase by orders of magnitude as
+compared to those achieved by a real-time task.
+\textsf{DMA} shows a bad performance for small data while it can sustain
+that performance for large data.
+This is attributed to the fact that once a DMA command is fired, the
+data transfer does not have to compete with CPU workload.
+The other methods are more or less controlled by the CPU, and thus are
+more affected by CPU workload.
 
 \begin{figure}[!t]
- \centering
- \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_HtoD.pdf}}\\
- \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_DtoH.pdf}}
- \caption{Average data transfer times of real-time single streams
- under high memory access load.}
- \label{fig:average_data_transfer_memswap_real-time}
+ \begin{center}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_HtoD.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_DtoH.pdf}}
+  \caption{Average performance of each data transfer method with a
+  real-time task under high memory pressure.}
+  \label{fig:average_realtime_memswap}
+ \end{center}
+ \vspace{0.5em}
+ \begin{center}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_HtoD_worst.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_DtoH_worst.pdf}}
+  \caption{Worst-case performance of each data transfer method with a
+  real-time task under high memory pressure.}
+  \label{fig:worst_realtime_memswap}
+ \end{center}
 \end{figure}
 
-\begin{figure}[!t]
- \centering
- \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_HtoD_worst.pdf}}\\
- \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_DtoH_worst.pdf}}
- \caption{Worst-case data transfer times of real-time single streams
- under high memory access load.}
- \label{fig:worst_case_data_transfer_memswap_real-time}
-\end{figure}
+We next evaluate the performance of each data transfer method under high
+memory pressure.
+We create another task that eats up host memory space.
+
 
 \begin{figure}[!t]
  \centering
@@ -197,21 +275,6 @@ extremely high workload.
 \end{figure}
 
 \begin{comment}
-\begin{figure}[!t]
- \centering
- \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_normal_HtoD.pdf}}\\
- \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_normal_DtoH.pdf}}
- \caption{Average data transfer times of single streams.}
- \label{fig:average_data_transfer}
-\end{figure}
-
-\begin{figure}[!t]
- \centering
- \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_normal_HtoD_worst.pdf}}\\
- \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/not_realtask/Memcpy_normal_DtoH_worst.pdf}}
- \caption{Worst-case data transfer times of single streams.}
- \label{fig:worst_case_data_transfer}
-\end{figure}
 
 \begin{figure}[!t]
  \centering

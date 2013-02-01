@@ -20,12 +20,19 @@ to the device memory, (ii) copy input data to the allocated device memory
 space, (iii) launch the program on the GPU, (iv) copy output data back
 to the host memory, and (v) free the allocated device memory space. 
 The scope of this paper is related to (ii) and (iv).
-In particular, we focus on the \texttt{cuMemCopyHtoD()} and the
+In particular, we use the \texttt{cuMemCopyHtoD()} and the
 \texttt{cuMemCopyDtoH()} functions of the CUDA Driver API, which
 correspond to (ii) and (iv) respectively.
 Since an open-source implementation of these functions is available with
 Gdev~\cite{Kato_ATC12}, we modify them to accomodate the data transfer
 methods investigated in this paper.
+
+In order to focus on the performance of data transfers between the host
+and the device memory, we allocate a data buffer to the pinned host
+memory rather than the typical heap allocated by \texttt{malloc()}.
+This pinned host memory space is mapped to the PCIe address and is never
+swapped out.
+It is also accessible to the GPU directly.
 
 Our computing platform contains a single set of the CPU and the GPU.
 Although we restrict our attention to CUDA and the GPU, the notion of

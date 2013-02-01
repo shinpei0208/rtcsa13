@@ -1,2 +1,18 @@
 \begin{abstract}
+ Graphics processing units (GPUs) embrace many-core compute devices.
+ In GPU-accelerated systems, massively parallelized compute kernels are
+ offloaded to the GPU.
+ This heterogeneous nature of GPU computing poses non-trivial data
+ transfer issues especially for low-latency real-time systems.
+ A detailed mechanism of data transfers for the GPU must be well
+ studied.
+ In this paper, we investigate possible data transfer methods for the
+ GPU in the state of the art.
+ We also provide open-source implementations of these methods to
+ compare their advantage and disadvantage in performance using
+ real-world systems.
+ Our experimental results show that the hardware-based direct memory
+ access (DMA) and the I/O read and write methods are the most effective,
+ while on-chip microcontrollers inside the GPU are useful to reduce the
+ data transfer times of concurrent multiple data streams.
 \end{abstract}
