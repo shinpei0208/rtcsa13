@@ -20,7 +20,7 @@ mostly applicable to PCIe-connected compute devices.
 
 \begin{figure}[!t]
  \centering
- \includegraphics[width=0.4\textwidth]{figure/Method/DMA_Method.pdf}
+ \includegraphics[width=0.45\textwidth]{figure/Method/DMA_Method.pdf}
  \caption{Standard DMA.}
  \label{fig:dma}
 \end{figure}
@@ -48,7 +48,7 @@ work~\cite{Kato_ATC11, Kato_ATC12}.
 
 \begin{figure}[!t]
  \centering
- \includegraphics[width=0.4\textwidth]{figure/Method/Micro_Method.pdf}
+ \includegraphics[width=0.45\textwidth]{figure/Method/Micro_Method.pdf}
  \caption{Microcontroller-based data transfer.}
  \label{fig:micro}
 \end{figure}
@@ -67,7 +67,7 @@ the host and the device memory.
 Figure~\ref{fig:micro} shows a concept of this microcontroller-based
 data transfer method.
 Since there is no data path to directly copy data between the host and
-the device memory using a microcontroller, each data transfer needs
+the device memory using a microcontroller, each data transfer is forced
 to take two hops: (i) the host memory and microcontroller and (ii) the
 device memory and microcontroller.
 This is non-trivial overhead but the handling of this DMA is very
@@ -93,7 +93,7 @@ transaction into multiple chunks.
 
 \begin{figure}[!t]
  \centering
- \includegraphics[width=0.4\textwidth]{figure/Method/IORW_Method.pdf}
+ \includegraphics[width=0.45\textwidth]{figure/Method/IORW_Method.pdf}
  \caption{Memory-mapped read and write.}
  \label{fig:iorw}
 \end{figure}
@@ -146,7 +146,7 @@ corresponding BAR1 region to the user-space buffer.
 
 \begin{figure}[!t]
  \centering
- \includegraphics[width=0.4\textwidth]{figure/Method/MEMWND_Method.pdf}
+ \includegraphics[width=0.45\textwidth]{figure/Method/MEMWND_Method.pdf}
  \caption{Memory-window read and write.}
  \label{fig:memwnd}
 \end{figure}
