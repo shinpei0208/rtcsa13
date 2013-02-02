@@ -70,17 +70,17 @@ transfer methods respectively:
 
 \begin{figure}[!t]
  \begin{center}
-  \subfigure[Host to Device]{\includegraphics[width=0.42\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_HtoD.pdf}}\\
-  \subfigure[Device to Host]{\includegraphics[width=0.42\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_DtoH.pdf}}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_HtoD.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_DtoH.pdf}}
   \caption{Average performance of each data transfer method with a
   real-time task.}
   \label{fig:average_realtime}
  \end{center}
 \end{figure}
-\begin{figure}
+\begin{figure}[!t]
  \begin{center}
-  \subfigure[Host to Device]{\includegraphics[width=0.42\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_HtoD_worst.pdf}}\\
-  \subfigure[Device to Host]{\includegraphics[width=0.42\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_DtoH_worst.pdf}}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_HtoD_worst.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_DtoH_worst.pdf}}
   \caption{Worst-case performance of each data transfer method with a
   real-time task.}
   \label{fig:worst_realtime}
@@ -131,47 +131,22 @@ However, real-time and normal tasks behave in a very different manner in
 the presence of competing workload.
 This will be discussed in the next subsection.
 
-\begin{comment}
-\begin{figure}[!t]
- \begin{center}
-  \subfigure[Host to Device]{\includegraphics[width=0.42\textwidth]{figure/Graph/not_realtask/Memcpy_normal_HtoD.pdf}}\\
-  \subfigure[Device to Host]{\includegraphics[width=0.42\textwidth]{figure/Graph/not_realtask/Memcpy_normal_DtoH.pdf}}
-  \caption{Average performance of each data transfer method with a
-  normal task.}
-  \label{fig:average_normal}
- \end{center}
-\end{figure}
-\begin{figure}
- \begin{center}
-  \subfigure[Host to Device]{\includegraphics[width=0.42\textwidth]{figure/Graph/not_realtask/Memcpy_normal_HtoD_worst.pdf}}\\
-  \subfigure[Device to Host]{\includegraphics[width=0.42\textwidth]{figure/Graph/not_realtask/Memcpy_normal_DtoH_worst.pdf}}
-  \caption{Worst-case performance of each data transfer methods with a
-  normal task.}
-  \label{fig:worst_normal}
- \end{center}
-\end{figure}
-
-Figure~\ref{fig:average_normal}~and~\ref{fig:worst_normal} show the
-average and the worst-case performance of a normal in the same setup as
-the above experiments.
-\end{comment}
-
 \subsection{Interfered Performance}
 \label{sec:interfered_performance}
 
 \begin{figure}[!t]
  \begin{center}
-  \subfigure[Host to Device]{\includegraphics[width=0.42\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_HtoD.pdf}}\\
-  \subfigure[Device to Host]{\includegraphics[width=0.42\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_DtoH.pdf}}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_HtoD.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_DtoH.pdf}}
   \caption{Average performance of each data transfer method with a
   real-time task under high CPU load.}
   \label{fig:average_realtime_cpuload}
  \end{center}
 \end{figure}
-\begin{figure}
+\begin{figure}[!t]
  \begin{center}
-  \subfigure[Host to Device]{\includegraphics[width=0.42\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_HtoD_worst.pdf}}\\
-  \subfigure[Device to Host]{\includegraphics[width=0.42\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_DtoH_worst.pdf}}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_HtoD_worst.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_DtoH_worst.pdf}}
   \caption{Worst-case performance of each data transfer methods with a
   real-time task under high CPU load.}
   \label{fig:worst_realtime_cpuload}
@@ -202,17 +177,17 @@ An interrupt approach is also worth being investigated.
 
 \begin{figure}[!t]
  \begin{center}
-  \subfigure[Host to Device]{\includegraphics[width=0.42\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_HtoD.pdf}}\\
-  \subfigure[Device to Host]{\includegraphics[width=0.42\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_DtoH.pdf}}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_HtoD.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_DtoH.pdf}}
   \caption{Average performance of each data transfer method with a
   normal data stream under high CPU load.}
   \label{fig:average_normal_cpuload}
  \end{center}
 \end{figure}
-\begin{figure}
+\begin{figure}[!t]
  \begin{center}
-  \subfigure[Host to Device]{\includegraphics[width=0.42\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_HtoD_worst.pdf}}\\
-  \subfigure[Device to Host]{\includegraphics[width=0.42\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_DtoH_worst.pdf}}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_HtoD_worst.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_DtoH_worst.pdf}}
   \caption{Worst-case performance of each data transfer method with a
   normal data stream under high CPU load.}
   \label{fig:worst_normal_cpuload}
@@ -236,17 +211,17 @@ This finding provides a design choice for the system implementation.
 
 \begin{figure}[!t]
  \begin{center}
-  \subfigure[Host to Device]{\includegraphics[width=0.42\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_HtoD.pdf}}\\
-  \subfigure[Device to Host]{\includegraphics[width=0.42\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_DtoH.pdf}}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_HtoD.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_DtoH.pdf}}
   \caption{Average performance of each data transfer method with a
   real-time task under high memory pressure.}
   \label{fig:average_realtime_memswap}
  \end{center}
 \end{figure}
-\begin{figure}
+\begin{figure}[!t]
  \begin{center}
-  \subfigure[Host to Device]{\includegraphics[width=0.42\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_HtoD_worst.pdf}}\\
-  \subfigure[Device to Host]{\includegraphics[width=0.42\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_DtoH_worst.pdf}}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_HtoD_worst.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_memswap_DtoH_worst.pdf}}
   \caption{Worst-case performance of each data transfer method with a
   real-time task under high memory pressure.}
   \label{fig:worst_realtime_memswap}
@@ -272,17 +247,17 @@ Otherwise they must be interfered by memory workload.
 
 \begin{figure}[!t]
  \begin{center}
-  \subfigure[Host to Device]{\includegraphics[width=0.42\textwidth]{figure/Graph/realtask/Memcpy_rtask_hackbench_HtoD.pdf}}\\
-  \subfigure[Device to Host]{\includegraphics[width=0.42\textwidth]{figure/Graph/realtask/Memcpy_rtask_hackbench_DtoH.pdf}}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_hackbench_HtoD.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_hackbench_DtoH.pdf}}
   \caption{Average performance of each data transfer method with a
   real-time task in the presence of \textsf{hackbench}.}
   \label{fig:average_realtime_hackbench}
  \end{center}
 \end{figure}
-\begin{figure}
+\begin{figure}[!t]
  \begin{center}
-  \subfigure[Host to Device]{\includegraphics[width=0.42\textwidth]{figure/Graph/realtask/Memcpy_rtask_hackbench_HtoD_worst.pdf}}\\
-  \subfigure[Device to Host]{\includegraphics[width=0.42\textwidth]{figure/Graph/realtask/Memcpy_rtask_hackbench_DtoH_worst.pdf}}
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_hackbench_HtoD_worst.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/realtask/Memcpy_rtask_hackbench_DtoH_worst.pdf}}
   \caption{Worst-case performance of each data transfer method with a
   real-time task in the presence of \textsf{hackbench}.}
   \label{fig:worst_realtime_hackbench}
@@ -307,17 +282,17 @@ systems and GPU computing.
 
 \begin{figure}[!t]
  \begin{center}
-  \subfigure[Host to Device]{\includegraphics[width=0.42\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_HtoD.pdf}}\\
-  \subfigure[Device to Host]{\includegraphics[width=0.42\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_DtoH.pdf}}\\
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_HtoD.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_DtoH.pdf}}\\
   \caption{Average performance of combinations of the data transfer
   methods for concurrent real-time tasks.}
   \label{fig:average_realtime_concurrent}
  \end{center}
 \end{figure}
-\begin{figure}
+\begin{figure}[!t]
  \begin{center}
-  \subfigure[Host to Device]{\includegraphics[width=0.42\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_HtoD_worst.pdf}}\\
-  \subfigure[Device to Host]{\includegraphics[width=0.42\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_DtoH_worst.pdf}}\\
+  \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_HtoD_worst.pdf}}\\
+  \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_DtoH_worst.pdf}}\\
   \caption{Worst-case performance of combinations of the data transfer
   methods for concurrent real-time tasks.}
   \label{fig:worst_realtime_concurrent}

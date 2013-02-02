@@ -45,3 +45,37 @@ The programming models of these different platforms are almost identical
 in that the CPU controls the compute devices.
 Our future work includes an integrated investigation of these different
 platforms.
+
+\begin{figure}[!t]
+ \centering
+ \includegraphics[width=0.49\textwidth]{figure/Method/pci_gpu.pdf}
+ \caption{Block diagram of the target system.}
+ \label{fig:pci_gpu}
+\end{figure}
+
+Figure~\ref{fig:pci_gpu} shows a summarized block diagram of the target
+system.
+The host computer consists of the CPU and the host memory connected via
+the system I/O bus.
+They are connected to the PCIe bus to which the GPU board is also
+connected.
+This means that the GPU is visible to the CPU as a PCIe device.
+The GPU is a complex compute device integrating a lot of hardware
+functional units.
+We focus on the CUDA-related units.
+There are the device memory and the GPU chip connected through a high
+bandwidth memory bus.
+The GPU chip contains graphics processing clusters (GPCs), each of which
+integrates hundreds of processing cores, \textit{a.k.a}, CUDA cores.
+The number of GPCs and CUDA cores is architecture-specific.
+For example, GPUs based on the NVIDIA GeForce Fermi
+architecture~\cite{NVIDIA_Fermi} used in this paper suppor at most 4
+GPCs and 512 CUDA cores.
+Each GPC is configured by an on-chip microcontroller.
+This microcontroller is wimpy but is capable of executing firmware code
+with its own instruction set.
+There is also a special \textit{hub} microcontroller, which broadcasts the
+operations on all the GPC-dedicated microcontrollers.
+The hardware DMA engines are also integrated on a chip.
+We investigate how these hardware components operate and interact to
+support data transfers in GPU computing.
