@@ -1,19 +1,20 @@
 \section{Data Transfer Methods}
 \label{sec:data_transfer_methods}
 
-In this section, we investigate data transfer methods for the GPU.
-A standard data transfer method uses hardware DMA engines integrated on
-the GPU, while direct data read and write accesses to the GPU device
-memory are allowed through PCIe BARs.
-We can also use microcontrollers integrated on the GPU to send and
+In this section, we investigate data transfer methods for GPU
+computing.
+The most intuitive data transfer method uses standard hardware DMA
+engines on the GPU, while direct read and write accesses to
+the device memory of the GPU are allowed through PCIe BARs.
+We may also use microcontrollers integrated on the GPU to send and
 receive data across the host and the device memory.
 Unfortunately, only a limited piece of these schemes has been studied in
 the literature.
 Our investigation and open implementations of these schemes provide a
 better understanding of data transfer mechanisms for the GPU.
 Note that we restrict our attention to the NVIDIA GPU architecture, but
-the concepts of data transfer methods introduced in this paper are
-mostly applicable to PCIe-connected compute devices.
+the concept of data transfer methods introduced in this paper is mostly
+applicable to any PCIe-connected compute devices.
 
 \subsection{Standard DMA}
 \label{sec:dma}

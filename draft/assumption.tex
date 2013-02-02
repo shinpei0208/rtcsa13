@@ -55,14 +55,14 @@ platforms.
 
 Figure~\ref{fig:pci_gpu} shows a summarized block diagram of the target
 system.
-The host computer consists of the CPU and the host memory connected via
-the system I/O bus.
+The host computer consists of the CPU and the host memory communicating
+on the system I/O bus.
 They are connected to the PCIe bus to which the GPU board is also
 connected.
 This means that the GPU is visible to the CPU as a PCIe device.
 The GPU is a complex compute device integrating a lot of hardware
-functional units.
-We focus on the CUDA-related units.
+functional units on a chip.
+This paper is only focused on the CUDA-related units.
 There are the device memory and the GPU chip connected through a high
 bandwidth memory bus.
 The GPU chip contains graphics processing clusters (GPCs), each of which
@@ -76,6 +76,6 @@ This microcontroller is wimpy but is capable of executing firmware code
 with its own instruction set.
 There is also a special \textit{hub} microcontroller, which broadcasts the
 operations on all the GPC-dedicated microcontrollers.
-The hardware DMA engines are also integrated on a chip.
-We investigate how these hardware components operate and interact to
+In addition to hardware DMA engines, this paper investigates how these
+detailed hardware components operate and interact with each other to
 support data transfers in GPU computing.
