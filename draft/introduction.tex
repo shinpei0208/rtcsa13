@@ -32,61 +32,64 @@ compute-intensive applications.
  \label{fig:intro_data_transfer}
 \end{figure}
 
-One of the greatest challenges of GPU computing is to integrate
-real-time systems.
+Grand challenges of GPU computing include an integration of real-time
+systems.
 So far the real-time systems community has addressed resource management
-issues of GPUs~\cite{Basaran_ECRTS12, Elliott_RTS12, Elliott_ECRTS12,
-Kato_ATC11, Kato_RTAS11, Kato_RTSS11}.
-The main contribution of these work is the scheduling of compute
-kernels and data transfers.
-On the other hand, the basic performance and latency issues of GPUs are
-not well explored in the literature.
+issues for GPUs~\cite{Basaran_ECRTS12, Elliott_RTS12, Elliott_ECRTS12,
+Kato_ATC11, Kato_RTAS11, Kato_RTSS11}, but the main contribution of
+these work is limited to the scheduling of compute kernels and data
+transfers.
+The basic performance and latency issues for GPUs are not well studied
+in the literature.
 Given that compute kernels are offloaded to the GPU, their performance
 and latency are more dominated by compiler and hardware technology.
-However, an optimization of data transfers must be complemented by system
-software due to constraints of PCIe devices~\cite{Kato_ATC12}.
+However an optimization of data transfers must be complemented by system
+software due to the constraint of PCIe devices~\cite{Kato_ATC12}.
 Data transfers may also be interfered by competing workload on the CPU,
 while offloaded compute kernels are isolated on the GPU.
-These data transfer issues must be well understood and addressed in
-order to build predictable soft real-time, if not hard real-time,
-systems integrated with cutting-edge GPU technology.
+These data transfer issues must be well understood and addressed to
+build predictable soft real-time systems, if not hard real-time systems,
+being integrated with cutting-edge GPU technology.
 
 Data transfer issues are particularly important for low-latency GPU
 computing.
 Kato~\textit{et. al.} demonstrated that the data transfer is a dominant
-property for GPU-accelerated plasma control systems~\cite{Kato_ICCPS13}.
-This is a specific application where data must be transferred between the
-sensor/actuator devices and the GPU at a high-rate but is a good example
-presenting impact of data transfers in GPU computing.
+property of GPU-accelerated plasma control systems~\cite{Kato_ICCPS13}.
+This is a specific application where the data must be transferred
+between sensor/actuator devices and the GPU at a high-rate, but is a
+good example presenting impact of data transfers for GPU computing.
 Since emerging applications augmented with GPUs may demand a similar
-performance requirement, a more general study on the GPU data transfer
+performance requirement, a better understanding of the GPU data transfer
 mechanism is desired.
 
-Figure~\ref{fig:intro_data_transfer} illustrates the average data
-transfer times of hardware-based direct memory access (DMA) and
-memory-mapped I/O read and write access performed on an NVIDIA GeForce
-GTX~480 graphics card using an open-source Linux
-driver~\cite{Kato_ATC12}.
-Apparently the performance characteristics are not identical between the
-host-to-device and the device-to-host directions.
-A very elementary issue of this performance difference has been
-discussed~\cite{Kato_ATC12}, but there is no clear conclusion on what
+Figure~\ref{fig:intro_data_transfer} shows the average data transfer
+times of hardware-based direct memory access (DMA) and memory-mapped I/O
+read-and-write access, which are performed on an NVIDIA GeForce GTX~480
+graphics card using the open-source Linux driver~\cite{Kato_ATC12}.
+Apparently the performance characteristics of the data transfer are not
+identical between the host-to-device and device-to-host directions.
+In previous work, a very elementary issue of this performance difference
+has been discussed~\cite{Kato_ATC12}, but there is no clear conclusion on what
 methods can optimize the data transfer performance, what different
 methods are available, and what is their implication for real-time
 systems.
-Currently we pray that the black-box data transfer functions provided by
-proprietary software of the hardware vendors are well optimized, because
+Currently we pray that the black-box data transfer functions of
+proprietary software provided by GPU vendors are well optimized, because
 the hardware details of GPUs are not disclosed to the public.
-However, real-time systems must build on a predictable basis.
-A better understanding of data transfer matters is an essential
-piece of work to facilitate research on real-time GPU computing.
+However real-time systems must build on a predictable basis.
+A better understanding of the data transfer is an essential piece of
+work to facilitate research on real-time GPU computing.
 
 \textbf{Contribution:}
 This paper explores data transfer methods for GPU computing and
 provides their detailed empirical comparison.
-We unveil several data transfer methods other than well-known DMA and
-I/O read and write approaches.
-The advantage and disadvantage of these methods are also clarified.
+We unveil several data transfer methods other than the well-known DMA
+and I/O read-and-write access.
+The advantage and disadvantage of these methods are quantitatively
+clarified.
+%
+% Here add the details of the contribution based on the ECRTS review.
+%
 The contribution of this paper provides an insight of how to design and
 implement data transfer methods especially in the context of real-time
 GPU computing.
