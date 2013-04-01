@@ -24,14 +24,6 @@ This broad range of applications raises the need of further developing
 GPU technology to enhance scalability of emerging data-parallel and
 compute-intensive applications.
 
-\begin{figure}[!t]
- \centering
- \subfigure[Host to Device]{\includegraphics[width=0.34\textwidth]{figure/Graph/forIntro_HtoD.pdf}}\\
- \subfigure[Device to Host]{\includegraphics[width=0.34\textwidth]{figure/Graph/forIntro_DtoH.pdf}}
- \caption{Performance of DMA and I/O read/write for the NVIDIA GPU.}
- \label{fig:intro_data_transfer}
-\end{figure}
-
 Grand challenges of GPU computing include an integration of real-time
 systems.
 So far the real-time systems community has addressed resource management
@@ -51,7 +43,7 @@ These data transfer issues must be well understood and addressed to
 build predictable soft real-time systems, if not hard real-time systems,
 being integrated with cutting-edge GPU technology.
 
-Data transfer issues are particularly important for low-latency GPU
+The data transfer is particularly an important issue for low-latency GPU
 computing.
 Kato~\textit{et. al.} demonstrated that the data transfer is a dominant
 property of GPU-accelerated plasma control systems~\cite{Kato_ICCPS13}.
@@ -62,37 +54,65 @@ Since emerging applications augmented with GPUs may demand a similar
 performance requirement, a better understanding of the GPU data transfer
 mechanism is desired.
 
-Figure~\ref{fig:intro_data_transfer} shows the average data transfer
+\begin{figure}[!t]
+ \centering
+ \subfigure[Host to Device]{\includegraphics[width=0.4\textwidth]{figure/Graph/forIntro_HtoD.pdf}}\\
+ \subfigure[Device to Host]{\includegraphics[width=0.4\textwidth]{figure/Graph/forIntro_DtoH.pdf}}
+ \caption{Performance of DMA and I/O read/write for the NVIDIA GPU.}
+ \label{fig:intro_data_transfer}
+\end{figure}
+
+Figure~\ref{fig:intro_data_transfer} depicts the average data transfer
 times of hardware-based direct memory access (DMA) and memory-mapped I/O
-read-and-write access, which are performed on an NVIDIA GeForce GTX~480
+read-and-write access, which are obtained on an NVIDIA GeForce GTX~480
 graphics card using the open-source Linux driver~\cite{Kato_ATC12}.
 Apparently the performance characteristics of the data transfer are not
-identical between the host-to-device and device-to-host directions.
+identical for the host-to-device and device-to-host directions.
 In previous work, a very elementary issue of this performance difference
-has been discussed~\cite{Kato_ATC12}, but there is no clear conclusion on what
-methods can optimize the data transfer performance, what different
-methods are available, and what is their implication for real-time
-systems.
-Currently we pray that the black-box data transfer functions of
-proprietary software provided by GPU vendors are well optimized, because
-the hardware details of GPUs are not disclosed to the public.
+has been discussed~\cite{Kato_ATC12}, but there is no clear conclusion
+on what methods can optimize the data transfer performance, what
+different methods are available, and what is their implication for
+real-time systems.
+Currently we pray that the black-box data transfer mechanism of
+proprietary software, provided by GPU vendors, is well optimized to
+meet the performance that programmers expect, because hardware details
+of GPUs are not disclosed to the public.
 However real-time systems must build on a predictable basis.
-A better understanding of the data transfer is an essential piece of
-work to facilitate research on real-time GPU computing.
+We must understand what latency and performance interference exist when
+using the GPU.
+To some extent the GPU is suitable for predictability once the workload
+is offloaded, but associated data transfers may compete with the
+host computer workload.
+Hence a better understanding of the data transfer relevant to GPU
+computing is an essential piece of work to support real-time systems
+with GPUs.
+Unfortunately prior work~\cite{Kato_ATC12, Kato_ICCPS13} did not provide
+performance characterization in the context of real-time and
+concurrent workload; they focused on a basic comparison of DMA and
+direct I/O access.
 
 \textbf{Contribution:}
-This paper explores data transfer methods for GPU computing and
-provides their detailed empirical comparison.
-We unveil several data transfer methods other than the well-known DMA
-and I/O read-and-write access.
-The advantage and disadvantage of these methods are quantitatively
-clarified.
-%
-% Here add the details of the contribution based on the ECRTS review.
-%
-The contribution of this paper provides an insight of how to design and
-implement data transfer methods especially in the context of real-time
-GPU computing.
+In this paper, we clarify the performance characteristics of
+currently-achievable data transfer methods for GPU computing while
+unveiling several new data transfer methods other than the well-known
+DMA and I/O read-and-write access.
+We reveal the advantage and disadvantage of these methods in a
+quantitative way leading a conclusion that the typical DMA and I/O
+read-and-write methods are the most effective in latency even in the
+presence of compelling workload, whereas concurrent data streams from
+multiple different contexts can benefit from the capability of on-chip
+microcontrollers integrated in the GPU.
+To the best of our knowledge, this is the first evidence of data
+transfer matters for GPU computing beyond an intuitive expectation,
+which allows system designers to choose appropriate data transfer
+methods depending on the requirement of their latency-sensitive GPU
+applications.
+Without our findings, none can reason about the usage of GPUs minimizing
+the data transfer latency and performance interference.
+Given that the contribution of this paper is not limited to a specific
+GPU but is applicable for PCIe compute devices, it is significant for a
+grander vision of high-performance real-time systems with GPUs and
+future heterogeneous architectures.
 
 \textbf{Organization:}
 The rest of this paper is organized as follows.
