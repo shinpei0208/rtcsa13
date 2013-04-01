@@ -1,8 +1,8 @@
 \section{Assumption and Terminology}
 \label{sec:assumption}
 
-We assume the Compute Unified Device Architecture (CUDA) for GPU
-programming~\cite{NVIDIA_CUDA}.
+We assume that the Compute Unified Device Architecture (CUDA) is used
+for GPU programming~\cite{NVIDIA_CUDA}.
 A unit of code that is individually launched on the GPU is called
 a \textit{kernel}.
 The kernel is composed of multiple \textit{threads} that execute the
@@ -14,18 +14,24 @@ The maximum number of threads that can be contained by an individual
 block is defined by the GPU architecture.
 
 CUDA uses a set of an application programming interface (API) functions
-to control the GPU.
-A CUDA program often follows (i) allocate space
+to manage the GPU.
+A typical CUDA program takes the following steps: (i) allocate space
 to the device memory, (ii) copy input data to the allocated device memory
 space, (iii) launch the program on the GPU, (iv) copy output data back
 to the host memory, and (v) free the allocated device memory space. 
 The scope of this paper is related to (ii) and (iv).
-In particular, we use the \texttt{cuMemCopyHtoD()} and the
-\texttt{cuMemCopyDtoH()} functions of the CUDA Driver API, which
-correspond to (ii) and (iv) respectively.
-Since an open-source implementation of these functions is available with
-Gdev~\cite{Kato_ATC12}, we modify them to accommodate the data transfer
-methods investigated in this paper.
+Particularly we use the \texttt{cuMemCopyHtoD()} and the
+\texttt{cuMemCopyDtoH()} functions provided by the CUDA Driver API,
+which correspond to (ii) and (iv) respectively.
+Since an open-source implementation of these functions is
+available~\cite{Kato_ATC12}, we modify them to accommodate various data
+transfer methods investigated in this paper.
+While they are synchronous data transfer functions, CUDA also provides
+asynchronous data transfer functions.
+In this paper, we restrict our attention to the synchronous data
+transfer functions for simplicity of description, but partly similar
+performance characteristics can also be applied for the asynchronous
+ones.
 
 In order to focus on the performance of data transfers between the host
 and the device memory, we allocate a data buffer to the pinned host
@@ -69,7 +75,7 @@ The GPU chip contains graphics processing clusters (GPCs), each of which
 integrates hundreds of processing cores, \textit{a.k.a}, CUDA cores.
 The number of GPCs and CUDA cores is architecture-specific.
 For example, GPUs based on the NVIDIA GeForce Fermi
-architecture~\cite{NVIDIA_Fermi} used in this paper suppor at most 4
+architecture~\cite{NVIDIA_Fermi} used in this paper support at most 4
 GPCs and 512 CUDA cores.
 Each GPC is configured by an on-chip microcontroller.
 This microcontroller is wimpy but is capable of executing firmware code
@@ -79,3 +85,12 @@ operations on all the GPC-dedicated microcontrollers.
 In addition to hardware DMA engines, this paper investigates how these
 detailed hardware components operate and interact with each other to
 support data transfers in GPU computing.
+
+It should be noted that our target system is not limited to a specific
+GPU but can be applied for most other GPUs and heterogeneous compute
+devices connected upon the PCIe bus, though each detailed specification
+may be different depending on their architectures.
+Concretely PCIe compute devices are typically visible to the CPU through
+the memory-mapped I/O space over some PCI base address register (BAR)
+and they often equip on-chip microcontrollers to run some firmware
+code.

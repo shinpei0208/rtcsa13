@@ -19,13 +19,6 @@ applicable to any PCIe-connected compute devices.
 \subsection{Standard DMA}
 \label{sec:dma}
 
-\begin{figure}[!t]
- \centering
- \includegraphics[width=0.46\textwidth]{figure/Method/DMA_Method.pdf}
- \caption{Standard DMA.}
- \label{fig:dma}
-\end{figure}
-
 The most typical method for GPU data transfers is to use standard DMA
 engines integrated on the GPU.
 There are two types of such DMA engines for synchronous and asynchronous
@@ -50,6 +43,11 @@ previous work~\cite{Kato_ATC11, Kato_ATC12}.
 \label{sec:micro}
 
 \begin{figure}[!t]
+ \centering
+ \includegraphics[width=0.46\textwidth]{figure/Method/DMA_Method.pdf}
+ \caption{Standard DMA.}
+ \label{fig:dma}
+ \vspace{2em}
  \centering
  \includegraphics[width=0.46\textwidth]{figure/Method/Micro_Method.pdf}
  \caption{Microcontroller-based data transfer.}
