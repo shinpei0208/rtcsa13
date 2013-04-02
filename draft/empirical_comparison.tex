@@ -20,16 +20,14 @@ While the test programs uniformly use the same CUDA API functions, we
 provide different internal implementations according to the target data
 transfer methods.
 
-Data streams between the host and the device memory are provided by a
+Each data stream between the host and the device memory is provided by a
 single GPU context.
-Performance interference among multiple GPU contexts is outside the
-scope of this paper.
-We evaluate the data transfer performances of both real-time and normal
+The performance interference among multiple GPU contexts is considered here.
+We evaluate the data transfer performance for both real-time and normal
 tasks.
-For the scheduling policies of the Linux kernel, we use
-\texttt{SCHED\_FIFO} for real-time tasks while \texttt{SCHED\_OTHER} for
-normal tasks, where the real-time tasks are always prioritized over the
-normal tasks.
+In particular, we use the \texttt{SCHED\_FIFO} scheduling policy for
+real-time tasks while normal tasks are scheduled by the default policy.
+The real-time tasks are always prioritized over the normal tasks.
 The real-time capability relies on the default performance of the
 real-time scheduling class supported by the Linux kernel.
 We believe that this setup is sufficient for our experiments given that
@@ -99,11 +97,12 @@ documented to the public.
 We also find that the performances of different methods are diverse but
 either \textsf{DMA} or \textsf{IORW} can derive the best performance for
 any data size.
-In case of the host-to-device direction, for small data from $16$B to
-$8$MB, \textsf{IORW} is preferred, while \textsf{DMA} outperforms
-\textsf{IORW} larger data than $8$MB.
-The other methods are almost always inferior to either of \textsf{DMA}
-or \textsf{IORW}.
+As shown in Figure~\ref{fig:intro_data_transfer} earlier, the small data
+ranging from $16$B to $8$MB prefers \textsf{IORW} for the host-to-device
+direction, while \textsf{DMA} outperforms \textsf{IORW} for larger data
+than $8$MB.
+Figure~\ref{fig:average_realtime} shows that the other methods are
+almost always inferior to either of \textsf{DMA} or \textsf{IORW}.
 The most significant finding is that \textsf{IORW} becomes very slow for
 the device-to-host direction.
 It is faster than \textsf{DMA} only until $512$B.
