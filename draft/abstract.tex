@@ -2,18 +2,18 @@
  Graphics processing units (GPUs) embrace many-core compute devices
  where massively parallel compute threads are offloaded from CPUs.
  This heterogeneous nature of GPU computing raises non-trivial data
- transfer matters especially for latency-sensitive real-time systems.
- However even the basic characteristics of the data transfer relevant to
- GPU computing are not well understood in the literature.
+ transfer problems especially for latency-sensitive real-time systems.
+ However even the basic characteristics of data transfers associated
+ with GPU computing are not well studied in the literature.
  In this paper, we investigate and characterize currently-achievable
- data transfer methods with state-of-the-art GPU technology.
- We also provide open-source implementations of these methods to
- compare their advantage and disadvantage in performance using
- real-world systems.
- Our experiments show that the hardware-based direct memory
- access (DMA) and the I/O read-and-write methods are the most effective,
- while on-chip microcontrollers inside the GPU are useful in case of
- reducing the data transfer latency for concurrent multiple data streams.
- We also disclose that that CPU priorities can protect the performance
+ data transfer methods of cutting-edge GPU technology.
+ We implement these methods using open-source software to compare their
+ performance and latency for real-world systems.
+ Our experimental results show that the hardware-assisted direct memory
+ access (DMA) and the I/O read-and-write access methods are usually the
+ most effective, while on-chip microcontrollers inside the GPU are
+ useful in terms of reducing the data transfer latency for concurrent
+ multiple data streams.
+ We also disclose that CPU priorities can protect the performance
  of GPU data transfers in the context of real-time systems.
 \end{abstract}

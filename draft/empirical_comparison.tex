@@ -72,22 +72,22 @@ transfer methods respectively:
  \begin{center}
   \subfigure[Host to Device]{\includegraphics[width=0.35\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_HtoD.pdf}}\\
   \subfigure[Device to Host]{\includegraphics[width=0.35\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_DtoH.pdf}}
-  \caption{Average performance of each data transfer method with a
-  real-time task.}
+  \caption{The average performance of the investigated data transfer
+  methods using a real-time task.}
   \label{fig:average_realtime}
  \end{center}
  \vspace{1.0em}
  \begin{center}
   \subfigure[Host to Device]{\includegraphics[width=0.35\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_HtoD_worst.pdf}}\\
   \subfigure[Device to Host]{\includegraphics[width=0.35\textwidth]{figure/Graph/realtask/Memcpy_rtask_normal_DtoH_worst.pdf}}
-  \caption{Worst-case performance of each data transfer method with a
-  real-time task.}
+  \caption{The worst-case performance of the investigated data transfer
+  methods using a real-time task.}
   \label{fig:worst_realtime}
  \end{center}
 \end{figure}
 
-Figure~\ref{fig:average_realtime} shows the average performance of each
-data transfer method when a real-time task runs alone.
+Figure~\ref{fig:average_realtime} shows the average performance of the
+investigated data transfer methods when using a real-time task alone.
 Even with this most straightforward setup, there are several interesting
 observations.
 Performance characteristics of the host-to-device and the device-to-host
@@ -113,6 +113,9 @@ but compromise write access performance.
 Another interesting observation is that using multiple GPC
 microcontrollers to parallelize the data transfer is less effective than
 a single GPC or HUB controller when the data size is small.
+This is attributed to the fact that the runtime management of multiple
+microcontrollers incurs additional overhead as compared to a single
+microcontroller, which does not pay for transferring small data sets.
 
 Figure~\ref{fig:worst_realtime} shows the worst-case performance in
 the same setup as the above experiment.
@@ -120,9 +123,10 @@ It is important to note that we acquire almost the same results as those
 shown in Figure~\ref{fig:average_realtime}, though there is
 some degradation in the performance of \textsf{DMA} for the
 host-to-device direction.
-These comparisons lead to some conclusion that we may optimize the data
-transfer performance by switching between \textsf{DMA} and \textsf{IORW}
-at an appropriate boundary.
+These comparisons lead to some conclusion that we may be able to
+optimize the data transfer performance by switching between \textsf{DMA}
+and \textsf{IORW} at an appropriate boundary.
+This boundary value however may depend on the system and device.
 
 We omit the results of normal tasks in this setup, because they are
 almost equal to those of real-time tasks shown above.
@@ -137,29 +141,29 @@ This will be discussed in the next subsection.
  \begin{center}
   \subfigure[Host to Device]{\includegraphics[width=0.35\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_HtoD.pdf}}\\
   \subfigure[Device to Host]{\includegraphics[width=0.35\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_DtoH.pdf}}
-  \caption{Average performance of each data transfer method with a
-  real-time task under high CPU load.}
+  \caption{The average performance of the investigated data transfer
+  methods using a real-time task under high CPU load.}
   \label{fig:average_realtime_cpuload}
  \end{center}
  \vspace{1.0em}
  \begin{center}
   \subfigure[Host to Device]{\includegraphics[width=0.35\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_HtoD_worst.pdf}}\\
   \subfigure[Device to Host]{\includegraphics[width=0.35\textwidth]{figure/Graph/realtask/Memcpy_rtask_cpuload_DtoH_worst.pdf}}
-  \caption{Worst-case performance of each data transfer methods with a
-  real-time task under high CPU load.}
+  \caption{The worst-case performance of the investigated data transfer
+  methods using a real-time task under high CPU load.}
   \label{fig:worst_realtime_cpuload}
   \end{center}
 \end{figure}
 
 Figure~\ref{fig:average_realtime_cpuload} shows the average performance
-of each data transfer method when a real-time task encounters extremely
-high workload on the CPU.
+of the investigated data transfer methods when a real-time task
+encounters extremely high workload on the CPU.
 All the methods are successfully protected from performance interference
 due to the real-time scheduler.
-Note that \textsf{DMA} shows a better performance than the previous
-experiments despite the presence of competing workload.
+One may observe that \textsf{DMA} shows a better performance than the
+previous experiments despite the presence of competing workload.
 This is due to the Linux real-time scheduler feature.
-\textsf{DMA} is performed by GPU commands, which may impose a
+\textsf{DMA} is launched by GPU commands, which could impose a
 suspension on the caller task.
 In the Linux kernel, a real-time task is awakened in a more responsive
 manner when switched from a normal task than from an idle task.
@@ -177,16 +181,16 @@ An interrupt approach is also worth being investigated.
  \begin{center}
   \subfigure[Host to Device]{\includegraphics[width=0.35\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_HtoD.pdf}}\\
   \subfigure[Device to Host]{\includegraphics[width=0.35\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_DtoH.pdf}}
-  \caption{Average performance of each data transfer method with a
-  normal data stream under high CPU load.}
+  \caption{The average performance of the investigated data transfer
+  methods using a normal task under high CPU load.}
   \label{fig:average_normal_cpuload}
  \end{center}
  \vspace{1.0em}
  \begin{center}
   \subfigure[Host to Device]{\includegraphics[width=0.35\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_HtoD_worst.pdf}}\\
   \subfigure[Device to Host]{\includegraphics[width=0.35\textwidth]{figure/Graph/not_realtask/Memcpy_cpuload_DtoH_worst.pdf}}
-  \caption{Worst-case performance of each data transfer method with a
-  normal data stream under high CPU load.}
+  \caption{The worst-case performance of the investigated data transfer
+  methods using a normal task under high CPU load.}
   \label{fig:worst_normal_cpuload}
  \end{center}
 \end{figure}
@@ -198,14 +202,15 @@ task when the CPU encounters extremely high workload same as the
 preceding experiments.
 Apparently the data transfer times increase by orders of magnitude as
 compared to those achieved by a real-time task.
-\textsf{DMA} shows a bad performance for small data while it can sustain
-that performance for large data.
+\textsf{DMA} shows a low performance for small data sets while it can be
+sustained for large data sets.
 This is attributed to the fact that once a DMA command is fired, the
 data transfer does not have to compete with CPU workload.
 The other methods are more or less controlled by the CPU, and thus are
 more affected by CPU workload.
 This finding provides a design choice for the system implementation such
-that the hardware-based DMA method is preferred in fair-scheduled systems.
+that the hardware-assisted DMA method is preferred in fair-scheduled
+systems.
 
 \begin{figure}[!t]
  \begin{center}
@@ -263,8 +268,9 @@ Otherwise they must be interfered by memory workload.
 \end{figure}
 
 Figure~\ref{fig:average_realtime_hackbench}~and~\ref{fig:worst_realtime_hackbench}
-show the average and the worst-case performance of each data transfer
-method respectively, when a misbehaving \textsf{hackbench} process coexists.
+show the average and the worst-case performance of the investigated data
+transfer methods respectively, when a misbehaving \textsf{hackbench}
+process coexists.
 \textsf{hackbench} is a tool that generates many processes executing I/O
 system calls with pipes.
 The results are all similar to the previous ones.
@@ -282,15 +288,15 @@ systems and GPU computing.
  \begin{center}
   \subfigure[Host to Device]{\includegraphics[width=0.35\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_HtoD.pdf}}\\
   \subfigure[Device to Host]{\includegraphics[width=0.35\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_DtoH.pdf}}\\
-  \caption{Average performance of combinations of the data transfer
-  methods for concurrent real-time tasks.}
+  \caption{The average performance of the combined data transfer methods
+  for concurrent real-time tasks.}
   \label{fig:average_realtime_concurrent}
  \end{center}
  \vspace{1.0em}
  \begin{center}
   \subfigure[Host to Device]{\includegraphics[width=0.35\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_HtoD_worst.pdf}}\\
   \subfigure[Device to Host]{\includegraphics[width=0.35\textwidth]{figure/Graph/not_realtask/Memcpy_hybrid_DtoH_worst.pdf}}\\
-  \caption{Worst-case performance of combinations of the data transfer
+  \caption{The worst-case performance of the combined data transfer
   methods for concurrent real-time tasks.}
   \label{fig:worst_realtime_concurrent}
  \end{center}
@@ -333,3 +339,49 @@ overlap concurrent data streams with \textsf{DMA} or \textsf{IORW}, and
 using multiple microcontrollers in parallel can further improve the
 performance of concurrent data transfers.
 
+\subsection{Lessons Learned}
+\label{sec:discussion}
+
+We identified that the maximum data transfer performance for GPU
+computing can obtain from a combination of the hardware-assisted DMA and
+the I/O read-and-write access methods depending on the data size.
+The small data should be transferred using the I/O read-and-write access
+while the large data should benefit from the hardware-assisted DMA.
+It is important to find the data size boundary where the better
+performer changes.
+We made a significant optimization for the I/O read-and-write access
+implementation over previous work~\cite{Kato_ATC12} whereas the
+hardware-assisted DMA has nothing to do with software optimization.
+It turned out that the I/O read-and-write access has an advantage until
+the data size reaches a few mega bytes, while the previous work reported
+that the hardware-assisted DMA performs better for a few kilo bytes of
+data using the same hardware device.
+This explains that a fine-grained tuning of the data transfer could
+dominate the performance of GPU computing, which has never been unveiled
+in previous work.
+
+The novel findings also include that CPU workload could affect the
+performance of data transfers associated with GPU computing.
+This is because the I/O read-and-write access is performed by the CPU
+and the hardware-assisted DMA is also triggered by the commands sent
+from the CPU.
+To protect their performance from competing CPU workload, therefore, a
+real-time CPU scheduler plays a vital role.
+Although this result is intuitively apparent, this paper demonstrated it
+quantitatively using real-world systems.
+
+Finally we provided a new approach to data transfers using on-chip
+microcontrollers integrated inside the GPU. 
+While this approach does not provide a performance benefit for a single
+stream of the data transfer, we found that it is useful to support
+concurrent multiple streams overlapping their data transfers.
+The Helios project~\cite{Nightingale09} showed that the integrated
+microcontroller is useful to offload the packet processing job of the
+network interface card and mentioned that GPUs and compute devices could
+also benefit from microcontrollers, though there was no actual
+development.
+We revealed a way of using microcontrollers to hide the latency of the
+data transfer associated with GPU computing, and demonstrated its
+effectiveness.
+We believe that this is a novel idea toward the development of
+low-latency real-time systems with GPUs and compute devices.

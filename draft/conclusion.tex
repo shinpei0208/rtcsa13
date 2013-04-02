@@ -1,29 +1,23 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-In this paper, we have presented an investigation and empirical
-comparison of the data transfer methods for GPU computing.
-We found that the hardware-based DMA and the I/O read and write methods
-are the most effective to maximize the data transfer performance for a
-single stream even in the presence of competing CPU workload.
-On the other hand, the microcontroller-based method is useful to overlap
-the data transfer with the DMA or the IO read and write methods,
-reducing the total makespan of multiple data streams.
-We also demonstrated that the traditional real-time CPU scheduler can
-shield the data transfer of a real-time task from performance
-interference.
-We believe that all these findings are useful contributions to develop
-an integration of real-time systems and GPU computing.
+In this paper, we have presented the performance characteristics of data
+transfers for GPU computing. 
+We found that the hardware-assisted DMA and the I/O read-and-write
+access methods are the most effective to maximize the data transfer
+performance for a single stream, while the microcontroller-based method
+can overlap data transfers with the DMA and the IO read-and-write access
+methods reducing the total makespan of multiple data streams.
+We also showed that the standard real-time CPU scheduler can
+shield the performance of data transfers from competing workload.
+They are novel findings and useful contributions to the development of
+low-latency real-time systems integrating GPUs.
+The implementations of the investigated data transfer methods are
+provided in the Gdev project at \url{http://github.com/cs005/gdev/}.
 
-Our open-source implementations of the data transfer methods
-provided in this paper may be downloaded from
-\url{http://github.com/cs005/gdev/}.
-
-In future work, we will investigate how to optimize the choice of data
+In future work, we will investigate how to determine the choice of data
 transfer methods depending on the target system and workload.
-Since user programs use the same API function for the data transfer, the
-underlying system software must understand environments and choose
-appropriate data transfer methods to maximize the performance and/or
-miminize the latency.
-Runtime management of soft real-time capabilities of GPU computing is
-also a core challenge for future work.
+Since data transfers are abstracted by the API in terms of user
+programs, the runtime system must understand environments and choose
+appropriate data transfer methods to meet the performance and latency
+requirements of workload.
